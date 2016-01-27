@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>r-kassa app</title>
+    <script src="node_modules/jexia-sdk-js/lib/browser/index.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+</head>
+<body>
+<div id="invoices">
+
+</div>
+<script>
+    var JexiaClient = window.jexiaClientBrowser.JexiaClient;
+    //LOGIN TO JEXIA AND GET CREDENTIALS
+    var Jexia = new JexiaClient({
+        appId: '',
+        appKey: '',
+        appSecret: ''
+    }).then(function (app) {
+        var invoces = app.dataset('invoices');
+
+        invoces.list().then({});
+
+        invoces.subscribe('*', function (message) {
+            $('#invoices').append('<div> New Sales: &euro;' + message.data.price + '</div>');
+            console.log(message);
+        });
+
+    });
+</script>
+</body>
+</html>
